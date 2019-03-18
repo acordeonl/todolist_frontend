@@ -2,6 +2,10 @@ import React from "react"
 // import { common } from '../styles'
 import back from './back.svg'
 import { observer } from "mobx-react"
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Paper from '@material-ui/core/Paper';
+import Input from '@material-ui/core/Input';
 
 @observer
 export default class TodoList extends React.Component {
@@ -33,6 +37,15 @@ export default class TodoList extends React.Component {
     const { store } = this.props ; 
     const { progress , filter, title , filteredTodos, uncompletedTodos, completedTodos } = store ;
     return (<div>
+      <IconButton aria-label="Delete">
+        <DeleteIcon />
+      </IconButton>
+      <Paper  elevation={1}>
+        <div className='card'>
+            proabndo
+        </div>
+      </Paper>
+      <Input placeholder="Placeholder" />
       <h1>todos</h1>
       <div>
         title
@@ -75,6 +88,11 @@ export default class TodoList extends React.Component {
       <img src={back}/>
       <button onClick={this.saveTodoList.bind(this)}>save</button>
       <a href="#" onClick={store.clearComplete}>Clear Complete</a>
+      <style jsx>{`
+          .card{
+            padding:40px
+          }
+      `}</style>
     </div>)
   }
 }
