@@ -4,7 +4,6 @@ import SavedTodosStore from "./stores/SavedTodosStore"
 import TodoList from "./components/TodoList"
 import SavedTodos from "./components/SavedTodos"
 
-
 class App extends Component {
     render() {
         return ( <div>
