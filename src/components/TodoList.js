@@ -1,5 +1,6 @@
 import React from "react"
 // import { common } from '../styles'
+import back from './back.svg'
 import { observer } from "mobx-react"
 
 @observer
@@ -71,6 +72,7 @@ export default class TodoList extends React.Component {
             <input  className="new"  onKeyPress={this.createNew.bind(this)} />
           </div>
       </div>}
+      <img src={back}/>
       <button onClick={this.saveTodoList.bind(this)}>save</button>
       <a href="#" onClick={store.clearComplete}>Clear Complete</a>
     </div>)

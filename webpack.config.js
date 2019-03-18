@@ -20,6 +20,12 @@ module.exports = {
   },
   module: {
     rules: [{
+      test: /\.(png|svg|jpg|gif)$/,
+      loader: 'file-loader',
+      options: {
+        name: '[path][name].[ext]',
+      },
+    },{
       test: /\.css$/,
       use: ['style-loader', 'css-loader'],
     },{
