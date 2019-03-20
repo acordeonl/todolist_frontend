@@ -1,5 +1,3 @@
-import { debug } from "util";
-
 const backendUrl = 'http://localhost:3000'
 
 // --------------- Auth ----------------------

@@ -34,8 +34,8 @@ export default class SavedTodosStore extends React.Component {
           New todo list
         </Button>
       </div>
-      {savedTodos.map(todoList => (
-        <TodoList key={todoList.id} todoList={todoList} />
+      {savedTodos.map((todoList,index) => (
+        <TodoList key={index} todoList={todoList} />
       ))}
       <style jsx>{layoutStyles}</style>
       <style jsx>{`

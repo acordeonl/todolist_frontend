@@ -249,8 +249,8 @@ class Todos extends React.Component {
           </IconButton>
         </div>
         {filter && <div>
-            {filteredTodos.map(todo => (
-              <Todo key={todo.id} todo={todo} />
+            {filteredTodos.map((todo,index) => (
+              <Todo key={index} todo={todo} />
             ))}
         </div>}
         
@@ -261,14 +261,14 @@ class Todos extends React.Component {
         {!filter && <div >
           {uncompletedTodos.length > 0 && <div>
             <div className='header'> To do </div>
-            {uncompletedTodos.map(todo => (
-              <Todo key={todo.id} todo={todo} />
+            {uncompletedTodos.map((todo,index) => (
+              <Todo key={index} todo={todo} />
             ))}
           </div>}
           {completedTodos.length > 0 && <div>
             <div className='header'> Done </div>
-            {completedTodos.map(todo => (
-              <Todo key={todo.id} todo={todo} />
+            {completedTodos.map((todo,index) => (
+              <Todo key={index} todo={todo} />
             ))}
           </div>}
         </div>}

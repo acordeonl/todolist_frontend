@@ -23,6 +23,10 @@ export class SavedTodosStore {
     return this.tags.split(' ')
   }
 
+  @action loadSavedTodos = ( todoLists ) => { 
+    this.savedTodos = [...todoLists]
+  }
+
   @action saveTodoList = () => { 
     console.log(toJS(this.savedTodos))
   }

@@ -42,28 +42,10 @@ export class TodoListStore {
     return this.todos.filter(todo => !todo.complete)
   }
 
-  @action  loadTodoList = ( id ) => {  
-    if(id === 1552896827459) {
-        this.title = 'probando'
-        this.tags = ['firme algo', 'mas', 'test']
-        this.todos = [
-          { value: "add login", id: 1552896827459, complete: false },
-          { value: "add backedn ", id: 1552896830666, complete: false },
-          { value: "add material ", id: 1552896838228, complete: false },
-          { value: "consider styled jsx", id: 1552896845034, complete: false },
-          { value: "add layout", id: 1552896849858, complete: true },
-          { value: "add todo list mockup", id: 1552896856181, complete: true },
-          { value: "add todo list crud", id: 1552896861010, complete: true }
-        ]
-      }
-      else {
-        this.title = 'otro'
-        this.tags = []
-        this.todos = [
-            { value: "add login", id: 1552896827459, complete: false },
-            { value: "add backedn ", id: 1552896830666, complete: false },
-        ]
-      }
+  @action  loadTodoList = ( title, tags, todos ) => {  
+    this.title = title 
+    this.tags = [...tags]
+    this.todos = [...todos]
   }
 
   @action getTodoList = () => {

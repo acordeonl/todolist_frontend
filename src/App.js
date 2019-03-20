@@ -27,14 +27,11 @@ const MuiTheme = createMuiTheme({
 
 class App extends Component {
   async componentDidMount() {
-    // let res = await login('cbarraza11@gmail.com','probando') ; 
-    // localStorage.setItem('jwt', res.access_token)
-    // let res = await updateTodoList ( 4 ,{
-    //   title:"probando",
-    //   tags:"testing",
-    //   todos:"[{'value':'last','complete':true},{'value':'comprar pan','complete':false}]"
-    // }) ;
-    let res = await deleteTodoList(4) ;
+    let res = await getTodoLists() ;
+    SavedTodosStore.loadSavedTodos(res.payload)
+    let tags = res.payload[0].tags.split(' ')
+    let todos = JSON.parse(res.payload[0].todos)
+    TodoListStore.loadTodoList (res.payload[0].title, tags, todos)
     console.log(res);
   }
   render() {
