@@ -7,8 +7,8 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import { layoutStyles } from '../styles'
-import { getTodoLists, createTodoList } from '../services/todoLists'
-import { renderTodoList } from '../services/render'
+import { createTodoList, deleteTodoList } from '../services/todoLists'
+import { renderTodoList, refreshData } from '../services/render'
 import theme from '../styles/theme'
 
 
@@ -23,13 +23,7 @@ export default class SavedTodosStore extends React.Component {
       todos:"[]"
     })
     if(res.payload) {
-      let res = await getTodoLists() ;
-      this.props.savedTodosStore.loadSavedTodos(res.payload)
-      let tags = []
-      if(res.payload[0].tags !== '')
-        tags = res.payload[0].tags.split(' ')
-      let todos = JSON.parse(res.payload[0].todos)
-      this.props.todoListStore.loadTodoList (res.payload[0].title, tags, todos)
+      refreshData()
     }
   }
   render() {
@@ -67,6 +61,14 @@ export default class SavedTodosStore extends React.Component {
 @inject ('savedTodosStore')
 @observer
 class TodoList extends React.Component { 
+  async deleteTodoList(id) {
+    console.log(id);
+    let res = await deleteTodoList(id)
+    console.log(res);
+    if(res.dev_message === "Deleted rows: 1") {
+      refreshData()
+    }
+  }
   render(){
     const { id , title  } = this.props.todoList 
     return ( <div onClick={()=>{renderTodoList(id)}}>
@@ -76,7 +78,7 @@ class TodoList extends React.Component {
             { title }
           </div>
           <div className='deleteIcon'>
-            <IconButton onClick={()=> this.props.savedTodosStore.deleteTodoList(id)}  size='small' >
+            <IconButton onClick={this.deleteTodoList.bind(this , id)}  size='small' >
               <DeleteIcon style={{color:'white', opacity:'0.7'}} fontSize='small' />
             </IconButton>
           </div>

@@ -11,7 +11,7 @@ import { Provider } from 'mobx-react'
 import theme from './styles/theme'
 import { login , signUp } from './services/auth'
 import { getTodoLists, createTodoList, updateTodoList, deleteTodoList} from './services/todoLists'
-import { renderTodoList } from './services/render'
+import { renderTodoList , refreshData } from './services/render'
 
 const MuiTheme = createMuiTheme({
   palette: {
@@ -28,10 +28,8 @@ const MuiTheme = createMuiTheme({
 
 
 class App extends Component {
-  async componentDidMount() {
-    let res = await getTodoLists() ;
-    SavedTodosStore.loadSavedTodos(res.payload)
-    renderTodoList(res.payload[0].id)
+  componentDidMount() {
+    refreshData()
   }
   render() {
     return (<Provider savedTodosStore={SavedTodosStore} todoListStore={TodoListStore} >

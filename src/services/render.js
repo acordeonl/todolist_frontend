@@ -1,5 +1,16 @@
-import SavedTodosStore from "../stores/SavedTodosStore"
-import TodoListStore from "../stores/TodoListStore"
+import SavedTodosStore from '../stores/SavedTodosStore'
+import TodoListStore from '../stores/TodoListStore'
+import { getTodoLists } from './todoLists'
+
+export const refreshData = async () => { 
+  let res = await getTodoLists() ;
+  SavedTodosStore.loadSavedTodos(res.payload)
+  let tags = []
+  if(res.payload[0].tags !== '')
+    tags = res.payload[0].tags.split(' ')
+  let todos = JSON.parse(res.payload[0].todos)
+  TodoListStore.loadTodoList (res.payload[0].title, tags, todos)
+}
 
 export const renderTodoList = async (id) => {
   let todoList = SavedTodosStore.getTodoListByid(id)
