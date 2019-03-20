@@ -9,11 +9,13 @@ export const refreshData = async () => {
   if(res.payload[0].tags !== '')
     tags = res.payload[0].tags.split(' ')
   let todos = JSON.parse(res.payload[0].todos)
+  SavedTodosStore.selectedTodoListId = res.payload[0].id
   TodoListStore.loadTodoList (res.payload[0].title, tags, todos)
 }
 
 export const renderTodoList = async (id) => {
   let todoList = SavedTodosStore.getTodoListByid(id)
+  SavedTodosStore.selectedTodoListId = id
   let tags = []
   if (todoList.tags !== '')
     tags = todoList.tags.split(' ')

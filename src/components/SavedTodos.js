@@ -62,9 +62,7 @@ export default class SavedTodosStore extends React.Component {
 @observer
 class TodoList extends React.Component { 
   async deleteTodoList(id) {
-    console.log(id);
     let res = await deleteTodoList(id)
-    console.log(res);
     if(res.dev_message === "Deleted rows: 1") {
       refreshData()
     }

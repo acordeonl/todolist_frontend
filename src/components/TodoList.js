@@ -17,6 +17,8 @@ import Grow from '@material-ui/core/Grow';
 import { todoListStyles , layoutStyles } from '../styles'
 import { observer, inject } from "mobx-react"
 import theme from '../styles/theme'
+import { deleteTodoList } from '../services/todoLists'
+import { refreshData } from '../services/render'
 
 
 export default () => (
@@ -49,7 +51,7 @@ class Menu extends React.Component {
     this.setState(state => ({ open: !state.open }));
   };
 
-  handleClose = event => {
+  handleClose = async (event) => {
     if (this.anchorEl.contains(event.target)) {
       return
     }
@@ -59,6 +61,11 @@ class Menu extends React.Component {
         break
       case 'filter':
         this.props.todoListStore.showFilterInput = true
+        break
+      case 'delete':
+        let res = await deleteTodoList(this.props.savedTodosStore.selectedTodoListId)
+        if(res.dev_message === "Deleted rows: 1") 
+          refreshData()
         break
       default:
         break
