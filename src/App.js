@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import TodoListStore from "./stores/TodoListStore"
 import SavedTodosStore from "./stores/SavedTodosStore"
 import TodoList from "./components/TodoList"
@@ -9,29 +9,34 @@ import Button from '@material-ui/core/Button';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import { Provider } from 'mobx-react'
 import theme from './styles/theme'
+import { login } from './services.js'
 
 const MuiTheme = createMuiTheme({
   palette: {
-      primary: teal,
-      secondary: teal,
+    primary: teal,
+    secondary: teal,
   },
   typography: {
-      useNextVariants: true,
+    useNextVariants: true,
   },
   status: {
-      danger: 'orange',
+    danger: 'orange',
   },
 });
 
 
 class App extends Component {
-    render() {
-        return (<Provider savedTodosStore={ SavedTodosStore } todoListStore={ TodoListStore } >
-          <MuiThemeProvider theme={ MuiTheme }>
-            <Main/>
-          </MuiThemeProvider>
-        </Provider>);
-    }
+  async componentDidMount() {
+    let a = await login() ; 
+    console.log(a);
+  }
+  render() {
+    return (<Provider savedTodosStore={SavedTodosStore} todoListStore={TodoListStore} >
+      <MuiThemeProvider theme={MuiTheme}>
+        <Main />
+      </MuiThemeProvider>
+    </Provider>);
+  }
 }
 
 const Main = () => (<div>
@@ -41,10 +46,10 @@ const Main = () => (<div>
   <div className='wrapper'>
     <div className='subWrapper'>
       <div className='savedTodos'>
-        <SavedTodos />            
+        <SavedTodos />
       </div>
       <div className='todoList'>
-        <TodoList />           
+        <TodoList />
       </div>
     </div>
     <style jsx>{`
@@ -78,12 +83,12 @@ const Main = () => (<div>
   </div>
 </div>)
 
-class Header extends React.Component { 
-  render(){
+class Header extends React.Component {
+  render() {
     return (<div className='wrapper'>
       <div className='button'>
-      <Button color='primary' size='large' variant='contained'>
-        LOG OUT
+        <Button color='primary' size='large' variant='contained'>
+          LOG OUT
       </Button>
       </div>
       <style jsx>{`
@@ -101,6 +106,6 @@ class Header extends React.Component {
       `}</style>
     </div>)
   }
-} 
+}
 
-export default App ;
+export default App;
