@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import { Provider } from 'mobx-react'
 import theme from './styles/theme'
-import { login } from './services.js'
+import { login , signUp, getTodoLists , createTodoList , updateTodoList , deleteTodoList } from './services.js'
 
 const MuiTheme = createMuiTheme({
   palette: {
@@ -27,8 +27,15 @@ const MuiTheme = createMuiTheme({
 
 class App extends Component {
   async componentDidMount() {
-    let a = await login() ; 
-    console.log(a);
+    // let res = await login('cbarraza11@gmail.com','probando') ; 
+    // localStorage.setItem('jwt', res.access_token)
+    // let res = await updateTodoList ( 4 ,{
+    //   title:"probando",
+    //   tags:"testing",
+    //   todos:"[{'value':'last','complete':true},{'value':'comprar pan','complete':false}]"
+    // }) ;
+    let res = await deleteTodoList(4) ;
+    console.log(res);
   }
   render() {
     return (<Provider savedTodosStore={SavedTodosStore} todoListStore={TodoListStore} >
