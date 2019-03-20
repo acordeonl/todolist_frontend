@@ -5,6 +5,7 @@ import TodoList from "./components/TodoList"
 import SavedTodos from "./components/SavedTodos"
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import teal from '@material-ui/core/colors/teal';
+import Button from '@material-ui/core/Button';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import { Provider } from 'mobx-react'
 import theme from './styles/theme'
@@ -33,7 +34,10 @@ class App extends Component {
     }
 }
 
-const Main = () => (
+const Main = () => (<div>
+  <div>
+    <Header />
+  </div>
   <div className='wrapper'>
     <div className='subWrapper'>
       <div className='savedTodos'>
@@ -67,12 +71,36 @@ const Main = () => (
       }
       .wrapper{
         width:100%;
-        margin-top: 8vh;
         display: flex;
         justify-content: center;
       }
     `}</style>
   </div>
-)
+</div>)
+
+class Header extends React.Component { 
+  render(){
+    return (<div className='wrapper'>
+      <div className='button'>
+      <Button color='primary' size='large' variant='contained'>
+        LOG OUT
+      </Button>
+      </div>
+      <style jsx>{`
+        .button{
+          opacity:0.6;
+        }
+        .button:hover{
+          opacity:0.8 ;
+        }
+        .wrapper{
+          float:right ;
+          margin-bottom:2vh ;
+          padding:20px 50px 20px 50px ;
+        }
+      `}</style>
+    </div>)
+  }
+} 
 
 export default App ;
