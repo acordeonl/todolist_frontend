@@ -14,6 +14,7 @@ class Todo {
 
 export class TodoListStore {
   @observable title = ''
+  @observable tags = ''
   @observable todos = []
   @observable filter = ''
 
@@ -35,13 +36,14 @@ export class TodoListStore {
       return Math.round((completedCnt / this.todos.length) * 100) + '%'
     return 0 + '%';
   }
-  @computed get uncompletedTodos() {
+  @computed get uncompletedTodos () {
     return this.todos.filter(todo => !todo.complete)
   }
 
-  @action  loadTodoList ( id ) {  
+  @action  loadTodoList = ( id ) => {  
     if(id === 1552896827459) {
         this.title = 'probando'
+        this.tags = 'firme'
         this.todos = [
           { value: "add login", id: 1552896827459, complete: false },
           { value: "add backedn ", id: 1552896830666, complete: false },
@@ -54,6 +56,7 @@ export class TodoListStore {
       }
       else {
         this.title = 'otro'
+        this.tags = 'probando'
         this.todos = [
             { value: "add login", id: 1552896827459, complete: false },
             { value: "add backedn ", id: 1552896830666, complete: false },
@@ -61,25 +64,26 @@ export class TodoListStore {
       }
   }
 
-  @action getTodoList () {
+  @action getTodoList = () => {
     return toJS(this.todos)
   }
 
-  @action clear () {  
+  @action clear = () => {  
     this.title = ''
+    this.tags = ''
     this.todos = []
     this.filter = ''
   }
 
-  @action createTodo (value) {
+  @action createTodo = (value) => {
     this.todos.push(new Todo(value))
   }
 
-  @action deleteTodo (id) {
+  @action deleteTodo = (id) => {
     this.todos = this.todos.filter(todo => todo.id !== id)
   }
 
-  @action clearComplete () {
+  @action clearComplete = () => {
     const incompleteTodos = this.todos.filter(todo => !todo.complete)
     this.todos.replace(incompleteTodos)
   }

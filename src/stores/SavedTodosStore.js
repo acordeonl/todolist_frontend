@@ -8,7 +8,7 @@ class TodoList {
   constructor(title , tags) {
     this.id = Date.now()
     this.title = title
-    this.tags = ""
+    this.tags = tags
   }
 }
 
@@ -23,15 +23,15 @@ export class SavedTodosStore {
     return tags.split(' ')
   }
 
-  @action saveTodoList () { 
+  @action saveTodoList = () => { 
     console.log(toJS(this.savedTodos))
   }
 
-  @action createTodoList (title , tags) {
+  @action createTodoList = (title , tags) => {
     this.savedTodos.push(new TodoList(title , tags))
   }
 
-  @action deleteTodoList (id) {
+  @action deleteTodoList = (id) => {
     this.savedTodos = this.savedTodos.filter(todoList => todoList.id !== id )
   }
 }

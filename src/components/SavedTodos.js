@@ -14,14 +14,13 @@ export default class SavedTodosStore extends React.Component {
   render() {
     const { savedTodos } = this.props.savedTodosStore 
     return (<div>
-      <h1>Saved Todos </h1>
       <div>
         Search
         <input onChange={console.log('hey')} />
       </div>
     
       {savedTodos.map(todoList => (
-        <TodoList key={todoList.id} title={todoList.title} id={todoList.id} />
+        <TodoList key={todoList.id} todoList={todoList} />
       ))}
       <div style={{margin:'20px'}}>
         Add todo list 
@@ -36,11 +35,12 @@ export default class SavedTodosStore extends React.Component {
 @observer
 class TodoList extends React.Component { 
   render(){
-    const { id , title  } = this.props 
+    const { id , title , tags } = this.props.todoList 
     return (
       <li onClick={() => this.props.todoListStore.loadTodoList(id) }>
         { title }
         <button onClick={()=> this.props.savedTodosStore.deleteTodoList(id)}>delete</button>
+        {tags}
       </li>
     )
   }
