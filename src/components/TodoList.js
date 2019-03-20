@@ -2,6 +2,9 @@ import React from "react"
 import { todoListStyles , layoutStyles } from '../styles'
 import { observer, inject } from "mobx-react"
 import theme from '../styles/theme'
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Clear';
 
 export default () => (
   <div >
@@ -66,7 +69,7 @@ class Header extends React.Component {
             background-color: purple;
           }
           .progress{
-              background-color: green;
+              background-color: ${theme.todoList.progressBarColor};
               height:10px;
               width:${progress};
             }
@@ -97,10 +100,12 @@ class Todos extends React.Component {
     const { filter, filteredTodos, uncompletedTodos, completedTodos } = this.props.todoListStore;
     return (<div >
       <div >
-        <div style={{margin:'15px 0 15px 0'}} className='centered' >
-          <input type="checkbox" style={{visibility:'hidden'}} />
+        <div style={{margin:'15px 0 7px 0'}} className='centered' >
+          <Checkbox style={{visibility:'hidden'}} />
           <input onBlur={(evt) => { evt.target.value = ''}} placeholder='Add todo' className='todoTextInput addTodo' onKeyPress={this.createNew.bind(this)} />
-          <button style={{visibility:'hidden'}} >delete</button> 
+          <IconButton style={{visibility:'hidden'}} size='small' >
+            <DeleteIcon fontSize='small' />
+          </IconButton>
         </div>
         {filter && <div>
             {filteredTodos.map(todo => (
@@ -131,6 +136,7 @@ class Todos extends React.Component {
       <style jsx>{todoListStyles}</style>
       <style jsx>{`
         .header{
+          user-select: none;
           padding:8px ;
           border-radius: 5px ;
           font-size: 20px ;
@@ -156,9 +162,11 @@ class Todo extends React.Component {
   render() {
     const { todo } = this.props;
     return ( <div className='wrapper centered'>
-        <input type="checkbox" onChange={() => todo.complete = !todo.complete} value={todo.complete} checked={todo.complete} />
+        <Checkbox onChange={() => todo.complete = !todo.complete} checked={todo.complete}/>
         <input className='todoTextInput' value={todo.value} onChange={evt => todo.value = evt.target.value} />
-        <button onClick={() => this.props.todoListStore.deleteTodo(todo.id)}>delete</button>
+        <IconButton size='small' onClick={() => this.props.todoListStore.deleteTodo(todo.id)} >
+          <DeleteIcon fontSize='small' />
+        </IconButton>
         <style jsx>{todoListStyles}</style>
         <style jsx>{layoutStyles}</style>
         <style jsx>{`

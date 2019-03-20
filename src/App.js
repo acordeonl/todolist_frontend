@@ -4,15 +4,15 @@ import SavedTodosStore from "./stores/SavedTodosStore"
 import TodoList from "./components/TodoList"
 import SavedTodos from "./components/SavedTodos"
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import indigo from '@material-ui/core/colors/indigo';
+import teal from '@material-ui/core/colors/teal';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import { Provider } from 'mobx-react'
 import theme from './styles/theme'
 
 const MuiTheme = createMuiTheme({
   palette: {
-      primary: indigo,
-      secondary: blueGrey,
+      primary: teal,
+      secondary: teal,
   },
   typography: {
       useNextVariants: true,
@@ -51,7 +51,7 @@ const Main = () => (
       }
       .savedTodos{
         width: 200px;
-        background-color: #c5edcf ;
+        background-color: ${theme.savedTodos.backgroundColor} ;
       }
       .subWrapper{
         box-shadow: rgba(0, 0, 0, 0.3) 1px 3px 10px -3px ;
