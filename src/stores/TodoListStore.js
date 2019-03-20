@@ -17,6 +17,7 @@ export class TodoListStore {
   @observable tags = ''
   @observable todos = []
   @observable filter = ''
+  @observable showFilterInput = false
 
   @computed get filteredTodos() {
     if (this.filter === '')
@@ -43,7 +44,7 @@ export class TodoListStore {
   @action  loadTodoList = ( id ) => {  
     if(id === 1552896827459) {
         this.title = 'probando'
-        this.tags = 'firme'
+        this.tags = 'firme algo mas test'
         this.todos = [
           { value: "add login", id: 1552896827459, complete: false },
           { value: "add backedn ", id: 1552896830666, complete: false },

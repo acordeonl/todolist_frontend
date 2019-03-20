@@ -39,6 +39,7 @@ export default () => (
 
 @inject('savedTodosStore')
 @inject('todoListStore')
+@observer
 class Menu extends React.Component {
   state = {
     open: false,
@@ -55,6 +56,9 @@ class Menu extends React.Component {
     switch (event.target.id) {
       case 'clear':
         this.props.todoListStore.clearComplete()
+        break
+      case 'filter':
+        this.props.todoListStore.showFilterInput = true
         break
       default:
         break
@@ -109,8 +113,13 @@ class Header extends React.Component {
     this.props.savedTodosStore.createTodoList(title ? title : 'Untitled todo list', tags)
     this.props.todoListStore.clear()
   }
+  hideFilterTodos() {
+    this.filterTodos.value = ''
+    this.props.todoListStore.filter = ''
+    this.props.todoListStore.showFilterInput = false
+  }
   render() {
-    let { progress, filter, title, tags } = this.props.todoListStore
+    let { showFilterInput, progress, filter, title, tags } = this.props.todoListStore
     return (
       <div >
         <div style={{borderBottom:'solid 1px rgb(236, 235, 235)'}}>
@@ -129,17 +138,31 @@ class Header extends React.Component {
             <input value={tags} onChange={evt => this.props.todoListStore.tags = evt.target.value} />
           </div>
         </div>
+        {showFilterInput && <div >
+          <div className='centered' style={{borderBottom:'solid 1px rgb(236, 235, 235)'}}> 
+            <input ref={(input) => { this.filterTodos = input}} 
+              placeholder='Filter todos'
+              className='filterInput' value={filter} 
+              onChange={evt => this.props.todoListStore.filter = evt.target.value} />
+            <Button color='primary' size='small' onClick={this.hideFilterTodos.bind(this)} >
+              Hide
+            </Button>
+          </div>
+        </div>}
         <div className='progress' />
-        {/* <div className='filter'>
-          Search
-          <input value={filter} onChange={evt => this.props.todoListStore.filter = evt.target.value} />
-        </div>
-        <button onClick={this.props.todoListStore.clearComplete}>Clear Complete</button> */}
         <style jsx>{layoutStyles}</style>
         <style jsx>{`
           .icons{
             margin: 5px 10px 5px 15px;
             display: flex ;
+          }
+          .filterInput{
+            width:100% ;
+            opacity: 0.8 ;
+            font-size: 14px;
+            outline: none ;
+            border:none ;
+            padding: 8px 30px 8px 50px; 
           }
           .title{
             outline:none;
@@ -150,9 +173,6 @@ class Header extends React.Component {
             font-size: 27px ;
             padding:15px;
             padding-left:30px;
-          }
-          .filter{
-            background-color: purple;
           }
           .progress{
               background-color: ${theme.todoList.progressBarColor};
