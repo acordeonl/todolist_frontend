@@ -29,7 +29,9 @@ class App extends Component {
   async componentDidMount() {
     let res = await getTodoLists() ;
     SavedTodosStore.loadSavedTodos(res.payload)
-    let tags = res.payload[0].tags.split(' ')
+    let tags = []
+    if(res.payload[0].tags !== '')
+      tags = res.payload[0].tags.split(' ')
     let todos = JSON.parse(res.payload[0].todos)
     TodoListStore.loadTodoList (res.payload[0].title, tags, todos)
     console.log(res);

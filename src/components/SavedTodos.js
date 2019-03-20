@@ -7,6 +7,7 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import { layoutStyles } from '../styles'
+import { getTodoLists, createTodoList } from '../services'
 import theme from '../styles/theme'
 
 
@@ -14,8 +15,21 @@ import theme from '../styles/theme'
 @inject ('todoListStore')
 @observer
 export default class SavedTodosStore extends React.Component {
-  addTodoList() {
-    this.props.savedTodosStore.createTodoList('Untitled todo list fda fasdfdas fasd fasfdsa fasdfadsfsadf', [])
+  async addTodoList() {
+    let res = await createTodoList({
+      title:"Untitled todo list",
+      tags:"",
+      todos:"[]"
+    })
+    if(res.payload) {
+      let res = await getTodoLists() ;
+      this.props.savedTodosStore.loadSavedTodos(res.payload)
+      let tags = []
+      if(res.payload[0].tags !== '')
+        tags = res.payload[0].tags.split(' ')
+      let todos = JSON.parse(res.payload[0].todos)
+      this.props.todoListStore.loadTodoList (res.payload[0].title, tags, todos)
+    }
   }
   render() {
     const { savedTodos } = this.props.savedTodosStore 
