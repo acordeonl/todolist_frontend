@@ -15,7 +15,7 @@ class TodoList {
 export class SavedTodosStore {
   @observable savedTodos = [{
     title:'probando',
-    tags:['testing', 'otravaina', 'hey'],
+    tags:['testing', 'otravaina', 'heyfdasf' , 'otravaina'],
     id: 1552896827459
   }]
 

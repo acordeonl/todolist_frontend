@@ -306,7 +306,7 @@ class Todo extends React.Component {
         <Checkbox onChange={() => todo.complete = !todo.complete} checked={todo.complete}/>
         <input className='todoTextInput' value={todo.value} onChange={evt => todo.value = evt.target.value} />
         <IconButton size='small' onClick={() => this.props.todoListStore.deleteTodo(todo.id)} >
-          <DeleteIcon fontSize='small' />
+          <DeleteIcon fontSize='small' style={{opacity:'0.4'}} />
         </IconButton>
         <style jsx>{todoListStyles}</style>
         <style jsx>{layoutStyles}</style>

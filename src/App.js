@@ -49,23 +49,25 @@ const Main = () => (
         border-bottom-right-radius:  12px;
         border-top-right-radius:  12px;
         background: ${theme.todoList.backgroundColor} ;
-        border:'solid 1px black'
+        overflow-y: auto ;
+        box-shadow: 0 2px 4px 0 rgba(130, 130, 130, 0.5) ;
       }
       .savedTodos{
-        width: 280px;
+        width: 300px;
         border-bottom-left-radius:  12px;
         border-top-left-radius:  12px;
         background-color: ${theme.savedTodos.backgroundColor} ;
+        overflow-y: auto ;
       }
       .subWrapper{
         box-shadow: rgba(0, 0, 0, 0.3) 1px 3px 10px -3px ;
         display: flex ;
         border-radius: 12px;
-        min-height: 500px;
+        height: 75vh;
       }
       .wrapper{
         width:100%;
-        margin-top: 100px;
+        margin-top: 8vh;
         display: flex;
         justify-content: center;
       }
