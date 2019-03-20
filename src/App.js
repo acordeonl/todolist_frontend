@@ -52,7 +52,7 @@ const Main = () => (
         border:'solid 1px black'
       }
       .savedTodos{
-        width: 200px;
+        width: 280px;
         border-bottom-left-radius:  12px;
         border-top-left-radius:  12px;
         background-color: ${theme.savedTodos.backgroundColor} ;

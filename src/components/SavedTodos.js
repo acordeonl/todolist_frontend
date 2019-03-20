@@ -1,31 +1,45 @@
 import React from "react"
 import { observer , inject } from "mobx-react"
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
+import { layoutStyles } from '../styles'
+
 
 @inject ('savedTodosStore')
 @inject ('todoListStore')
 @observer
 export default class SavedTodosStore extends React.Component {
-  createNew(e) {
-    if (e.which === 13 && e.target.value !== '') {
-      this.props.savedTodosStore.createTodoList(e.target.value)
-      e.target.value = ''
-    }
+  addTodoList() {
+    this.props.savedTodosStore.createTodoList('Untitled todo list', [])
   }
   render() {
     const { savedTodos } = this.props.savedTodosStore 
-    return (<div>
-      <div>
-        Search
-        <input onChange={console.log('hey')} />
+    return (<div className='centeredVertical'>
+      <div className='centered searchInput'>
+        <Input placeholder='Search'
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon style={{opacity:'0.4'}}/>
+            </InputAdornment>
+          }
+        />
       </div>
-    
+      <div className='centered' style={{margin:'20px'}}>
+        <Button variant="contained" color="primary" onClick={this.addTodoList.bind(this)} >
+          New todo list
+        </Button>
+      </div>
       {savedTodos.map(todoList => (
         <TodoList key={todoList.id} todoList={todoList} />
       ))}
-      <div style={{margin:'20px'}}>
-        Add todo list 
-        <input  className="new"  onKeyPress={this.createNew.bind(this)} />
-      </div>
+      <style jsx>{layoutStyles}</style>
+      <style jsx>{`
+          .searchInput{
+            margin-top: 20px;
+          }
+      `}</style>
     </div>)
   }
 }
