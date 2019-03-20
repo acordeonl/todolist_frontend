@@ -103,14 +103,13 @@ class Menu extends React.Component {
 class Header extends React.Component {
   saveTodoList() {
     let todos = this.props.todoListStore.getTodoList()
+    let tagList = this.props.todoListStore.getTagList()
     console.log('--------------------------')
     console.log(this.props.todoListStore.title)
     console.log(todos)
     console.log('--------------------------')
-    if (this.addTodoInput)
-      this.addTodoInput.value = ''
-    let { title, tags } = this.props.todoListStore
-    this.props.savedTodosStore.createTodoList(title ? title : 'Untitled todo list', tags)
+    let { title } = this.props.todoListStore
+    this.props.savedTodosStore.createTodoList(title ? title : 'Untitled todo list', tagList)
     this.props.todoListStore.clear()
   }
   hideFilterTodos() {

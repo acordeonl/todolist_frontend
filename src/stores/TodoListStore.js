@@ -70,9 +70,13 @@ export class TodoListStore {
     return toJS(this.todos)
   }
 
+  @action getTagList = () => {
+    return toJS(this.tags)
+  }
+
   @action clear = () => {  
     this.title = ''
-    this.tags = ''
+    this.tags = []
     this.todos = []
     this.filter = ''
   }
