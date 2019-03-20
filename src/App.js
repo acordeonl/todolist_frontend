@@ -9,7 +9,9 @@ import Button from '@material-ui/core/Button';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import { Provider } from 'mobx-react'
 import theme from './styles/theme'
-import { login , renderTodoList, signUp, getTodoLists , createTodoList , updateTodoList , deleteTodoList } from './services.js'
+import { login , signUp } from './services/auth'
+import { getTodoLists, createTodoList, updateTodoList, deleteTodoList} from './services/todoLists'
+import { renderTodoList } from './services/render'
 
 const MuiTheme = createMuiTheme({
   palette: {

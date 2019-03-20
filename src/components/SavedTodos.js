@@ -7,7 +7,8 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import { layoutStyles } from '../styles'
-import { getTodoLists, createTodoList, renderTodoList } from '../services'
+import { getTodoLists, createTodoList } from '../services/todoLists'
+import { renderTodoList } from '../services/render'
 import theme from '../styles/theme'
 
 
