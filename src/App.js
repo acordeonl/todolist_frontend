@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import { Provider } from 'mobx-react'
 import theme from './styles/theme'
-import { login , signUp, getTodoLists , createTodoList , updateTodoList , deleteTodoList } from './services.js'
+import { login , renderTodoList, signUp, getTodoLists , createTodoList , updateTodoList , deleteTodoList } from './services.js'
 
 const MuiTheme = createMuiTheme({
   palette: {
@@ -29,12 +29,7 @@ class App extends Component {
   async componentDidMount() {
     let res = await getTodoLists() ;
     SavedTodosStore.loadSavedTodos(res.payload)
-    let tags = []
-    if(res.payload[0].tags !== '')
-      tags = res.payload[0].tags.split(' ')
-    let todos = JSON.parse(res.payload[0].todos)
-    TodoListStore.loadTodoList (res.payload[0].title, tags, todos)
-    console.log(res);
+    renderTodoList(res.payload[0].id)
   }
   render() {
     return (<Provider savedTodosStore={SavedTodosStore} todoListStore={TodoListStore} >

@@ -1,4 +1,6 @@
 const backendUrl = 'http://localhost:3000'
+import SavedTodosStore from "./stores/SavedTodosStore"
+import TodoListStore from "./stores/TodoListStore"
 
 // --------------- Auth ----------------------
 
@@ -41,10 +43,10 @@ export const getTodoLists = async () => {
   return res
 }
 
-export const createTodoList = async ( body ) => {
+export const createTodoList = async (body) => {
   let res = await (await fetch(`${backendUrl}/v1/todoLists/`, {
     method: 'post',
-    headers: new Headers({ 
+    headers: new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     }),
@@ -53,10 +55,10 @@ export const createTodoList = async ( body ) => {
   return res
 }
 
-export const updateTodoList = async ( id, body ) => {
+export const updateTodoList = async (id, body) => {
   let res = await (await fetch(`${backendUrl}/v1/todoLists/${id}`, {
     method: 'put',
-    headers: new Headers({ 
+    headers: new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     }),
@@ -65,10 +67,10 @@ export const updateTodoList = async ( id, body ) => {
   return res
 }
 
-export const deleteTodoList = async ( id ) => {
+export const deleteTodoList = async (id) => {
   let res = await (await fetch(`${backendUrl}/v1/todoLists/${id}`, {
     method: 'delete',
-    headers: new Headers({ 
+    headers: new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     })
@@ -76,3 +78,13 @@ export const deleteTodoList = async ( id ) => {
   return res
 }
 
+// --------------- Load data to GUI ----------------------
+
+export const renderTodoList = async (id) => {
+  let todoList = SavedTodosStore.getTodoListByid(id)
+  let tags = []
+  if (todoList.tags !== '')
+    tags = todoList.tags.split(' ')
+  let todos = JSON.parse(todoList.todos)
+  TodoListStore.loadTodoList(todoList.title, tags, todos)
+}

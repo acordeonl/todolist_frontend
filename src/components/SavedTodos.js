@@ -7,7 +7,7 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import { layoutStyles } from '../styles'
-import { getTodoLists, createTodoList } from '../services'
+import { getTodoLists, createTodoList, renderTodoList } from '../services'
 import theme from '../styles/theme'
 
 
@@ -68,7 +68,7 @@ export default class SavedTodosStore extends React.Component {
 class TodoList extends React.Component { 
   render(){
     const { id , title  } = this.props.todoList 
-    return ( <div onClick={() => this.props.todoListStore.loadTodoList(id) }>
+    return ( <div onClick={()=>{renderTodoList(id)}}>
       <div className='card'>
         <div className='spaceBetween top'>
           <div className='title'>
