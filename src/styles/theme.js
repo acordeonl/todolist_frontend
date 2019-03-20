@@ -4,7 +4,7 @@ module.exports = {
   },
   todoList:{
     textInputColor:'#f7f5f5',
-    backgroundColor:'rgb(253, 253, 253)',
+    backgroundColor:'white',
     headerColor:'red',
     progressBarColor:'#009688'
   },

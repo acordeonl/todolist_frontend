@@ -18,6 +18,10 @@ export const layoutStyles = css`
     align-items: center ;
     justify-content: center ;
   }
+  .spaceBetween {
+    display: flex ;
+    justify-content: space-between ;
+  }
 `
 
 export const todoListStyles = css`

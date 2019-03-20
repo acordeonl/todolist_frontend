@@ -1,10 +1,23 @@
 import React from "react"
+import Checkbox from '@material-ui/core/Checkbox';
+// --------------- Button icon ----------------------
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Clear';
+import SaveIcon from '@material-ui/icons/Save';
+import MoreIcon from '@material-ui/icons/MoreVert';
+// --------------- Menu ----------------------
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Button from '@material-ui/core/Button';
+import Popper from '@material-ui/core/Popper';
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import Grow from '@material-ui/core/Grow';
+// --------------- styles ----------------------
 import { todoListStyles , layoutStyles } from '../styles'
 import { observer, inject } from "mobx-react"
 import theme from '../styles/theme'
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Clear';
+
 
 export default () => (
   <div >
@@ -20,12 +33,65 @@ export default () => (
           padding: 10px 50px 50px 50px ;
           border-bottom-right-radius: 5px;
         }
-        .header{
-          background-color: royalblue;
-        }
     `}</style>
   </div>
 )
+
+@inject('savedTodosStore')
+@inject('todoListStore')
+class Menu extends React.Component {
+  state = {
+    open: false,
+  };
+
+  handleToggle = () => {
+    this.setState(state => ({ open: !state.open }));
+  };
+
+  handleClose = event => {
+    if (this.anchorEl.contains(event.target)) {
+      return
+    }
+    switch (event.target.id) {
+      case 'clear':
+        this.props.todoListStore.clearComplete()
+        break
+      default:
+        break
+    }
+    this.setState({ open: false })
+  };
+  render(){
+    const { open } = this.state
+    return (<div>
+      <IconButton style={{opacity:'0.8'}} buttonRef={node => {
+        this.anchorEl = node
+      }}
+      onClick={this.handleToggle}>
+        <MoreIcon  />
+      </IconButton>
+      <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            id="menu-list-grow"
+            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={this.handleClose}>
+                <MenuList>
+                  <MenuItem id='filter' onClick={this.handleClose}>Filter todos</MenuItem>
+                  <MenuItem id='clear' onClick={this.handleClose}>Clear completed</MenuItem>
+                  <MenuItem id='delete' onClick={this.handleClose}>Delete todo list</MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+      </div>)
+  }
+}
 
 @inject('savedTodosStore')
 @inject('todoListStore')
@@ -46,25 +112,45 @@ class Header extends React.Component {
   render() {
     let { progress, filter, title, tags } = this.props.todoListStore
     return (
-      <div>
-        <button onClick={this.saveTodoList.bind(this)}>save</button>
-        <div>
-          title
-          <input value={title} onChange={evt => this.props.todoListStore.title = evt.target.value} />
-          {title}
-        </div>
-        <div>
-          tags
-          <input value={tags} onChange={evt => this.props.todoListStore.tags = evt.target.value} />
-          {tags}
+      <div >
+        <div style={{borderBottom:'solid 1px rgb(236, 235, 235)'}}>
+          <div className='spaceBetween' style={{margin:'5 0px 0 0px'}} >
+            <input className='title' placeholder='Untitled todo list' value={title} onChange={evt => this.props.todoListStore.title = evt.target.value} />
+            <div className='icons'>
+              <div title='Save todo list'>
+                <IconButton onClick={this.saveTodoList.bind(this)} size='small' >
+                  <SaveIcon style={{opacity:'0.8'}}/>
+                </IconButton>
+              </div>
+              <Menu/>
+            </div>
+          </div>
+          <div>
+            <input value={tags} onChange={evt => this.props.todoListStore.tags = evt.target.value} />
+          </div>
         </div>
         <div className='progress' />
-        <div className='filter'>
+        {/* <div className='filter'>
           Search
           <input value={filter} onChange={evt => this.props.todoListStore.filter = evt.target.value} />
         </div>
-        <button onClick={this.props.todoListStore.clearComplete}>Clear Complete</button>
+        <button onClick={this.props.todoListStore.clearComplete}>Clear Complete</button> */}
+        <style jsx>{layoutStyles}</style>
         <style jsx>{`
+          .icons{
+            margin: 5px 10px 5px 15px;
+            display: flex ;
+          }
+          .title{
+            outline:none;
+            border:none ;
+            width:80% ;
+            opacity: 0.8;
+            margin:10px 0 10px 0;
+            font-size: 27px ;
+            padding:15px;
+            padding-left:30px;
+          }
           .filter{
             background-color: purple;
           }

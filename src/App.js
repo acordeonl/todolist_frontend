@@ -46,17 +46,21 @@ const Main = () => (
     <style jsx>{`
       .todoList{
         width:500px;
+        border-bottom-right-radius:  12px;
+        border-top-right-radius:  12px;
         background: ${theme.todoList.backgroundColor} ;
         border:'solid 1px black'
       }
       .savedTodos{
         width: 200px;
+        border-bottom-left-radius:  12px;
+        border-top-left-radius:  12px;
         background-color: ${theme.savedTodos.backgroundColor} ;
       }
       .subWrapper{
         box-shadow: rgba(0, 0, 0, 0.3) 1px 3px 10px -3px ;
         display: flex ;
-        border-radius: 5px;
+        border-radius: 12px;
         min-height: 500px;
       }
       .wrapper{
