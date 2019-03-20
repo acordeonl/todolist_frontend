@@ -14,7 +14,7 @@ class Todo {
 
 export class TodoListStore {
   @observable title = ''
-  @observable tags = ''
+  @observable tags = []
   @observable todos = []
   @observable filter = ''
   @observable showFilterInput = false
@@ -25,6 +25,7 @@ export class TodoListStore {
     var matchesFilter = new RegExp(this.filter, "i")
     return this.todos.filter(todo => !this.filter || (matchesFilter.test(todo.value) && !todo.completed))
   }
+
   @computed get completedTodos() {
     return this.todos.filter(todo => todo.complete)
   }
@@ -44,7 +45,7 @@ export class TodoListStore {
   @action  loadTodoList = ( id ) => {  
     if(id === 1552896827459) {
         this.title = 'probando'
-        this.tags = 'firme algo mas test'
+        this.tags = ['firme algo', 'mas', 'test']
         this.todos = [
           { value: "add login", id: 1552896827459, complete: false },
           { value: "add backedn ", id: 1552896830666, complete: false },
@@ -57,7 +58,7 @@ export class TodoListStore {
       }
       else {
         this.title = 'otro'
-        this.tags = 'probando'
+        this.tags = []
         this.todos = [
             { value: "add login", id: 1552896827459, complete: false },
             { value: "add backedn ", id: 1552896830666, complete: false },
@@ -78,6 +79,10 @@ export class TodoListStore {
 
   @action createTodo = (value) => {
     this.todos.push(new Todo(value))
+  }
+
+  @action addTag = (value) => {
+    this.tags.push(value)
   }
 
   @action deleteTodo = (id) => {

@@ -15,12 +15,12 @@ class TodoList {
 export class SavedTodosStore {
   @observable savedTodos = [{
     title:'probando',
-    tags:'testing otravaina hey',
+    tags:['testing', 'otravaina', 'hey'],
     id: 1552896827459
   }]
 
-  @computed get getTags() {
-    return tags.split(' ')
+  @computed get tagList() {
+    return this.tags.split(' ')
   }
 
   @action saveTodoList = () => { 

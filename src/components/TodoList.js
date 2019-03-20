@@ -118,6 +118,18 @@ class Header extends React.Component {
     this.props.todoListStore.filter = ''
     this.props.todoListStore.showFilterInput = false
   }
+
+  addTag (e) {
+    let tag = e.target.value.trim()
+    if(e.which === 32) 
+      e.preventDefault()
+    if ((e.which === 13 || e.which === 32) &&  tag !== ' ' &&  tag !== '') {
+      this.props.todoListStore.addTag(tag)
+      this.addTodoInput = e.target
+      e.target.value = ''
+    }
+  }
+
   render() {
     let { showFilterInput, progress, filter, title, tags } = this.props.todoListStore
     return (
@@ -134,9 +146,13 @@ class Header extends React.Component {
               <Menu/>
             </div>
           </div>
-          <div>
-            <input value={tags} onChange={evt => this.props.todoListStore.tags = evt.target.value} />
+          <div className='tagList'>
+            {tags.map((tag,index) => (
+              <div className='tag' key={index}> {tag} </div>
+            ))}
+            {/* <input value={tags} onChange={evt => this.props.todoListStore.tags = evt.target.value} /> */}
           </div>
+          <input onKeyPress={this.addTag.bind(this)} onBlur={(evt) => { evt.target.value = ''}} placeholder='add tag' className='tagInput'  />
         </div>
         {showFilterInput && <div >
           <div className='centered' style={{borderBottom:'solid 1px rgb(236, 235, 235)'}}> 
@@ -152,9 +168,29 @@ class Header extends React.Component {
         <div className='progress' />
         <style jsx>{layoutStyles}</style>
         <style jsx>{`
+          .tagInput{
+            border:none;
+            padding: 0px 5px 10px 30px;
+            outline:none;
+            opacity: 0.6 ;
+          }
           .icons{
             margin: 5px 10px 5px 15px;
             display: flex ;
+          }
+          .tagList{
+            margin:0px 30px 10px 30px;
+            word-wrap: break-word;
+            line-height: 2.2;
+          }
+          .tag{
+            display: inline ;
+            background-color: ${theme.todoList.progressBarColor};
+            opacity: 0.6 ;
+            padding:5px 15px 5px 15px;
+            margin:10px 5px 0px 5px;
+            color:white;
+            border-radius: 4px;
           }
           .filterInput{
             width:100% ;
@@ -169,7 +205,7 @@ class Header extends React.Component {
             border:none ;
             width:80% ;
             opacity: 0.8;
-            margin:10px 0 10px 0;
+            margin:10px 0 0px 0;
             font-size: 27px ;
             padding:15px;
             padding-left:30px;
