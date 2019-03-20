@@ -46,7 +46,7 @@ const Main = () => (
     <style jsx>{`
       .todoList{
         width:500px;
-        background: ${theme.todoList.background} ;
+        background: ${theme.todoList.backgroundColor} ;
         border:'solid 1px black'
       }
       .savedTodos{

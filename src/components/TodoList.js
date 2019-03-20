@@ -13,8 +13,8 @@ export default () => (
     </div>
     <style jsx>{`
         .todos{
-          background-color: ${theme.todoList.background} ;
-          padding: 20px 50px 50px 50px ;
+          background-color: ${theme.todoList.backgroundColor} ;
+          padding: 10px 50px 50px 50px ;
           border-bottom-right-radius: 5px;
         }
         .header{
@@ -81,6 +81,10 @@ class Header extends React.Component {
 @inject('todoListStore')
 @observer
 class Todos extends React.Component {
+  constructor(props) {
+      super(props) ; 
+  }
+
   createNew(e) {
     if (e.which === 13 && e.target.value !== '') {
       this.props.todoListStore.createTodo(e.target.value)
@@ -95,7 +99,7 @@ class Todos extends React.Component {
       <div >
         <div style={{margin:'15px 0 15px 0'}} className='centered' >
           <input type="checkbox" style={{visibility:'hidden'}} />
-          <input placeholder='Add todo' className='todoTextInput addTodo' onKeyPress={this.createNew.bind(this)} />
+          <input onBlur={(evt) => { evt.target.value = ''}} placeholder='Add todo' className='todoTextInput addTodo' onKeyPress={this.createNew.bind(this)} />
           <button style={{visibility:'hidden'}} >delete</button> 
         </div>
         {filter && <div>
@@ -110,7 +114,7 @@ class Todos extends React.Component {
 
         {!filter && <div >
           {uncompletedTodos.length > 0 && <div>
-            <div className='header'>To do </div>
+            <div className='header'> To do </div>
             {uncompletedTodos.map(todo => (
               <Todo key={todo.id} todo={todo} />
             ))}
@@ -127,15 +131,19 @@ class Todos extends React.Component {
       <style jsx>{todoListStyles}</style>
       <style jsx>{`
         .header{
-
+          padding:8px ;
+          border-radius: 5px ;
+          font-size: 20px ;
+          color:gray ;
         }
         .noTodos{
+          user-select: none ;
           margin-top: 90px;
           font-size: 20px ;
           opacity: 0.7;
         }
         .addTodo{
-          background-color: ${theme.todoList.textInput}
+          background-color: ${theme.todoList.textInputColor}
         }
       `}</style>
     </div>)

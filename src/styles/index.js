@@ -31,7 +31,7 @@ export const todoListStyles = css`
       width: 300px;
   }   
   .todoTextInput:hover{
-    background-color: ${theme.todoTextInput} ;
+    background-color: ${theme.todoList.textInputColor} ;
   }
   .redBack{
       background-color: red ;
