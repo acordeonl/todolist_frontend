@@ -12,7 +12,7 @@ class Todo {
   }
 }
 
-export class TodoStore {
+export class TodoListStore {
   @observable title = ''
   @observable todos = []
   @observable filter = ''
@@ -39,47 +39,51 @@ export class TodoStore {
     return this.todos.filter(todo => !todo.complete)
   }
 
-  @action
-  loadTodoList = () => { 
-    this.todos = [
-      { value: "add login", id: 1552896827459, complete: false },
-      { value: "add backedn ", id: 1552896830666, complete: false },
-      { value: "add material ", id: 1552896838228, complete: false },
-      { value: "consider styled jsx", id: 1552896845034, complete: false },
-      { value: "add layout", id: 1552896849858, complete: true },
-      { value: "add todo list mockup", id: 1552896856181, complete: true },
-      { value: "add todo list crud", id: 1552896861010, complete: true }
-    ]
+  @action  loadTodoList ( id ) {  
+    if(id === 1552896827459) {
+        this.title = 'probando'
+        this.todos = [
+          { value: "add login", id: 1552896827459, complete: false },
+          { value: "add backedn ", id: 1552896830666, complete: false },
+          { value: "add material ", id: 1552896838228, complete: false },
+          { value: "consider styled jsx", id: 1552896845034, complete: false },
+          { value: "add layout", id: 1552896849858, complete: true },
+          { value: "add todo list mockup", id: 1552896856181, complete: true },
+          { value: "add todo list crud", id: 1552896861010, complete: true }
+        ]
+      }
+      else {
+        this.title = 'otro'
+        this.todos = [
+            { value: "add login", id: 1552896827459, complete: false },
+            { value: "add backedn ", id: 1552896830666, complete: false },
+        ]
+      }
   }
 
-  @action
-  getTodoList = () => {
+  @action getTodoList () {
     return toJS(this.todos)
   }
 
-  @action
-  clear = () => {  
+  @action clear () {  
     this.title = ''
     this.todos = []
     this.filter = ''
   }
 
-  @action
-  createTodo = (value) => {
+  @action createTodo (value) {
     this.todos.push(new Todo(value))
   }
 
-  @action
-  deleteTodo = (id) => {
+  @action deleteTodo (id) {
     this.todos = this.todos.filter(todo => todo.id !== id)
   }
 
-  @action
-  clearComplete = () => {
+  @action clearComplete () {
     const incompleteTodos = this.todos.filter(todo => !todo.complete)
     this.todos.replace(incompleteTodos)
   }
 }
 
-export default new TodoStore
+export default new TodoListStore
 

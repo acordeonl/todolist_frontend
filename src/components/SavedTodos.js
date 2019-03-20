@@ -2,16 +2,15 @@ import React from "react"
 import { observer , inject } from "mobx-react"
 
 @inject ('savedTodosStore')
-@inject ('todoStore')
+@inject ('todoListStore')
 @observer
 export default class SavedTodosStore extends React.Component {
   createNew(e) {
     if (e.which === 13 && e.target.value !== '') {
-      this.props.savedTodosStore.createTodo(e.target.value)
+      this.props.savedTodosStore.createTodoList(e.target.value)
       e.target.value = ''
     }
   }
-
   render() {
     const { savedTodos } = this.props.savedTodosStore 
     return (<div>
@@ -24,19 +23,22 @@ export default class SavedTodosStore extends React.Component {
       {savedTodos.map(todoList => (
         <TodoList key={todoList.id} title={todoList.title} id={todoList.id} />
       ))}
-
-      <button onClick={this.props.todoStore.loadTodoList}>loadTodoList</button>
+      <div style={{margin:'20px'}}>
+        Add todo list 
+        <input  className="new"  onKeyPress={this.createNew.bind(this)} />
+      </div>
     </div>)
   }
 }
 
+@inject ('todoListStore')
 @inject ('savedTodosStore')
 @observer
 class TodoList extends React.Component { 
   render(){
     const { id , title  } = this.props 
     return (
-      <li >
+      <li onClick={() => this.props.todoListStore.loadTodoList(id) }>
         { title }
         <button onClick={()=> this.props.savedTodosStore.deleteTodoList(id)}>delete</button>
       </li>

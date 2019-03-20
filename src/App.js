@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import TodoStore from "./stores/TodoStore"
+import TodoListStore from "./stores/TodoListStore"
 import SavedTodosStore from "./stores/SavedTodosStore"
 import TodoList from "./components/TodoList"
 import SavedTodos from "./components/SavedTodos"
@@ -24,7 +24,7 @@ const theme = createMuiTheme({
 
 class App extends Component {
     render() {
-        return (<Provider savedTodosStore={ SavedTodosStore } todoStore={ TodoStore } >
+        return (<Provider savedTodosStore={ SavedTodosStore } todoListStore={ TodoListStore } >
           <MuiThemeProvider theme={ theme }>
             <SavedTodos />            
             <TodoList  />           
