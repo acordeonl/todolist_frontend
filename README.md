@@ -1,23 +1,31 @@
-mobx-react-boilerplate
-=====================
+[Demo](http://todolist-cbarraza.surge.sh/)
 
-A minimal application that combines [MobX](https://mobxjs.github.io/mobx) with [React](https://facebook.github.io/react).
-Supports ES6 and JSX compilation through babel.
+# Todo list React App
 
-* Support for React-Hot-Loader can be found in the [`with-hot-loader`](https://github.com/mobxjs/mobx-react-boilerplate/tree/with-hot-loader) branch
-* For a typescript based boilerplate, see [`mobx-react-typescript-boilerplate`](https://github.com/mobxjs/mobx-react-typescript-boilerplate)
-* To use MobX with create-react-app and decorators, [react-app-rewired](https://github.com/timarney/react-app-rewired/tree/master/packages/react-app-rewire-mobx) or this example using [custom-react-scripts](https://github.com/codylindley/mobx-react)
+## Description
+Project includes a todo list web app built with ReactJs. App's state is managed with MobX and data is saved on a postgres database using the [Todo list backend](https://github.com/acordeonl/todolist_backend).
+
+## Run app with Docker
+Run `docker-compose up` at the root folder (Runs web app on port 3001)
+
+## Manual Setup
+
+Open root folder and run `npm install`.
+
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.<br>
+Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
 
 
-### Run the example
+### `npm run build`
 
-```
-npm install
-npm start
-```
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Browser should open automatically. Otherwise, navigate to the URL reported in the terminal
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-### Credits
-
-* [Mendix](http://github.com/mendix) for providing the opportunity to battle test this approach (we're hiring!).
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
