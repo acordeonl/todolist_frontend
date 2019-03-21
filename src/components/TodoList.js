@@ -176,7 +176,9 @@ class Header extends React.Component {
                   <SaveIcon style={{opacity:'0.8'}}/>
                 </IconButton>
               </div>
-              <Menu/>
+              <div style={{zIndex:'1000'}}> 
+                <Menu/>
+              </div>
             </div>
           </div>
           <div className='tagList'>
