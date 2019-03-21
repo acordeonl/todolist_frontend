@@ -3,10 +3,12 @@
 # Todo list React App
 
 ## Description
+Project includes a todo list web app built with ReactJs. App state is managed with MobX and data is saved on a postgres database using the [Todo list backend](https://github.com/acordeonl/todolist_backend).
 
+## Run app with Docker
+Run `docker-compose up` at the root folder (Runs web app on port 3001)
 
-
-## Setup
+## Manual Setup
 
 Open root folder and run `npm install`.
 
