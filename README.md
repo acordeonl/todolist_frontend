@@ -1,23 +1,29 @@
-mobx-react-boilerplate
-=====================
+[Demo](http://todolist-cbarraza.surge.sh/)
 
-A minimal application that combines [MobX](https://mobxjs.github.io/mobx) with [React](https://facebook.github.io/react).
-Supports ES6 and JSX compilation through babel.
+# Todo list React App
 
-* Support for React-Hot-Loader can be found in the [`with-hot-loader`](https://github.com/mobxjs/mobx-react-boilerplate/tree/with-hot-loader) branch
-* For a typescript based boilerplate, see [`mobx-react-typescript-boilerplate`](https://github.com/mobxjs/mobx-react-typescript-boilerplate)
-* To use MobX with create-react-app and decorators, [react-app-rewired](https://github.com/timarney/react-app-rewired/tree/master/packages/react-app-rewire-mobx) or this example using [custom-react-scripts](https://github.com/codylindley/mobx-react)
+## Description
 
 
-### Run the example
 
-```
-npm install
-npm start
-```
+## Setup
 
-Browser should open automatically. Otherwise, navigate to the URL reported in the terminal
+Open root folder and run `npm install`.
 
-### Credits
+In the project directory, you can run:
 
-* [Mendix](http://github.com/mendix) for providing the opportunity to battle test this approach (we're hiring!).
+### `npm start`
+
+Runs the app in the development mode.<br>
+Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
+
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
