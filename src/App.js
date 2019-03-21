@@ -98,9 +98,11 @@ class Header extends React.Component {
   render() {
     return (<div className='wrapper'>
       <div className='button'>
-        <Button onClick={this.logOut.bind(this)} color='primary' size='large' variant='contained'>
-          LOG OUT
-        </Button>
+        {localStorage.getItem('jwt') && <div>
+          <Button onClick={this.logOut.bind(this)} color='primary' size='large' variant='contained'>
+            LOG OUT
+          </Button> 
+        </div>}
       </div>
       <style jsx>{`
         .button{

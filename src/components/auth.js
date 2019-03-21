@@ -16,18 +16,25 @@ class Auth extends Component {
     const formData = new window.FormData(event.target)
     if(this.action === 'logIn') {
       let res = await login( formData.get('email') , formData.get('password') )
-      if(res.user_message === 'invalid credentials')
+      if(res.user_message === 'invalid credentials'){
         alert(res.user_message)
-      else{
-        localStorage.setItem('jwt' , res.access_token )
-        window.location.reload()
+        return ;
       }
+      localStorage.setItem('jwt' , res.access_token )
+      window.location.reload()
     }
     if(this.action === 'signUp') { 
       let res = await signUp( formData.get('email') , formData.get('password') )
-      console.log(res);
-      if(res.user_message === 'user already exists')
-        alert(res.user_message)
+      if(res.err){
+        alert('Please add email and password')
+        return 
+      }
+      if(res.dev_message !== 'user created') {
+        alert(res.dev_message)
+        return 
+      }
+      localStorage.setItem('jwt' , res.access_token )
+      window.location.reload()
     }
   }
   render() {
