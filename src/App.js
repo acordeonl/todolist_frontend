@@ -27,9 +27,9 @@ const MuiTheme = createMuiTheme({
 
 
 class App extends Component {
-  componentDidMount() {
+  async componentDidMount() {
     if (localStorage.getItem('jwt'))
-      refreshData()
+      await refreshData()
   }
   render() {
     return (<Provider savedTodosStore={SavedTodosStore} todoListStore={TodoListStore} >

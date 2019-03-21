@@ -33,7 +33,8 @@ class Auth extends Component {
         alert(res.dev_message)
         return 
       }
-      localStorage.setItem('jwt' , res.access_token )
+      let res2 = await login( formData.get('email') , formData.get('password') )
+      localStorage.setItem('jwt' , res2.access_token )
       window.location.reload()
     }
   }

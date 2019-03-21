@@ -21,23 +21,40 @@ import { updateTodoList, deleteTodoList } from '../services/todoLists'
 import { refreshData } from '../services/render'
 
 
-export default () => (
-  <div >
-    <div className='header'>
-      <Header />
-    </div>
-    <div className='todos'>
-      <Todos />
-    </div>
-    <style jsx>{`
-        .todos{
-          background-color: ${theme.todoList.backgroundColor} ;
-          padding: 10px 50px 50px 50px ;
-          border-bottom-right-radius: 5px;
-        }
-    `}</style>
-  </div>
-)
+@inject('savedTodosStore')
+@observer
+export default class TodoList extends React.Component { 
+  render(){
+    let { selectedTodoListId  } = this.props.savedTodosStore
+    return (
+      <div >
+        { selectedTodoListId !== -1 ? <div>
+          <div className='header'>
+            <Header />
+          </div>
+          <div className='todos'>
+            <Todos />
+          </div>
+        </div> : <div className='centered noResults'>
+          No results
+        </div>}
+        <style jsx>{layoutStyles}</style>
+        <style jsx>{`
+          .noResults{
+            margin-top:300px;
+            font-size: 25px;
+          }
+          .todos{
+            background-color: ${theme.todoList.backgroundColor} ;
+            padding: 10px 50px 50px 50px ;
+            border-bottom-right-radius: 5px;
+          }
+        `}</style>
+      </div>
+    )
+  }
+}
+
 
 @inject('savedTodosStore')
 @inject('todoListStore')
@@ -65,7 +82,7 @@ class Menu extends React.Component {
       case 'delete':
         let res = await deleteTodoList(this.props.savedTodosStore.selectedTodoListId)
         if(res.dev_message === "Deleted rows: 1") 
-          refreshData()
+          await refreshData()
         break
       default:
         break
@@ -118,7 +135,7 @@ class Header extends React.Component {
     if(res.dev_message) {
       if(res.dev_message === 'Updated rows: 1' || res.dev_message === 'Updated rows: 0' ) {
         alert('Todo list has been saved')
-        refreshData()
+        await refreshData()
       }
       else 
         err = true ;

@@ -23,13 +23,13 @@ export default class SavedTodosStore extends React.Component {
       todos: "[]"
     })
     if (res.payload) {
-      refreshData()
+      await refreshData()
     }
   }
-  queryTodolists(e) {
+  async queryTodolists(e) {
     if (e.which === 13) {
       console.log(e.target.value);
-      refreshData(e.target.value)
+      await refreshData(e.target.value)
     }
   }
   render() {
@@ -70,7 +70,7 @@ class TodoList extends React.Component {
   async deleteTodoList(id) {
     let res = await deleteTodoList(id)
     if (res.dev_message === "Deleted rows: 1") {
-      refreshData()
+      await refreshData()
     }
   }
   render() {

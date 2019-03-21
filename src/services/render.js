@@ -16,6 +16,9 @@ export const refreshData = async (query) => {
     let todos = JSON.parse(res.payload[0].todos)
     SavedTodosStore.selectedTodoListId = res.payload[0].id
     TodoListStore.loadTodoList(res.payload[0].title, tags, todos)
+  } 
+  else{ 
+    SavedTodosStore.selectedTodoListId = -1
   }
 }
 

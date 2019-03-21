@@ -14,7 +14,7 @@ class TodoList {
 
 export class SavedTodosStore {
   @observable savedTodos = []
-  @observable selectedTodoListId = 0
+  @observable selectedTodoListId = -1
 
   @computed get tagList() {
     return this.tags.split(',')
