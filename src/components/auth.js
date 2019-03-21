@@ -39,7 +39,7 @@ class Auth extends Component {
     }
   }
   render() {
-    return (<div>
+    return (<div style={{marginTop:'100px'}}>
       <Paper elevation={1}>
         <form className='wrapper' onSubmit={this.handleSubmit.bind( this )}>
           <TextField
