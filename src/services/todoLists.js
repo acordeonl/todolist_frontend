@@ -1,6 +1,14 @@
 import config from './config'
 
+const verifySession = () => {
+  if(localStorage.getItem('jwt'))
+    return true
+  else 
+    window.location.reload() 
+}
+
 export const getTodoLists = async () => {
+  verifySession()
   let res = await (await fetch(`${config.backendUrl}/v1/todoLists/list`, {
     method: 'get',
     headers: new Headers({
@@ -12,6 +20,7 @@ export const getTodoLists = async () => {
 }
 
 export const queryTodoLists = async ( query ) => {
+  verifySession()
   let res = await (await fetch(`${config.backendUrl}/v1/todoLists/query?q=${query}`, {
     method: 'get',
     headers: new Headers({
@@ -23,6 +32,7 @@ export const queryTodoLists = async ( query ) => {
 }
 
 export const createTodoList = async (body) => {
+  verifySession()
   let res = await (await fetch(`${config.backendUrl}/v1/todoLists/`, {
     method: 'post',
     headers: new Headers({
@@ -35,6 +45,7 @@ export const createTodoList = async (body) => {
 }
 
 export const updateTodoList = async (id, body) => {
+  verifySession()
   let res = await (await fetch(`${config.backendUrl}/v1/todoLists/${id}`, {
     method: 'put',
     headers: new Headers({
@@ -47,6 +58,7 @@ export const updateTodoList = async (id, body) => {
 }
 
 export const deleteTodoList = async (id) => {
+  verifySession()
   let res = await (await fetch(`${config.backendUrl}/v1/todoLists/${id}`, {
     method: 'delete',
     headers: new Headers({

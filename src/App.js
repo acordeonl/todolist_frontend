@@ -9,9 +9,8 @@ import Button from '@material-ui/core/Button';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import { Provider } from 'mobx-react'
 import theme from './styles/theme'
-import { login , signUp } from './services/auth'
-import { getTodoLists, createTodoList, updateTodoList, deleteTodoList} from './services/todoLists'
-import { renderTodoList , refreshData } from './services/render'
+import { refreshData } from './services/render'
+import Auth from './components/auth'
 
 const MuiTheme = createMuiTheme({
   palette: {
@@ -29,7 +28,8 @@ const MuiTheme = createMuiTheme({
 
 class App extends Component {
   componentDidMount() {
-    refreshData()
+    if (localStorage.getItem('jwt'))
+      refreshData()
   }
   render() {
     return (<Provider savedTodosStore={SavedTodosStore} todoListStore={TodoListStore} >
@@ -45,14 +45,20 @@ const Main = () => (<div>
     <Header />
   </div>
   <div className='wrapper'>
-    <div className='subWrapper'>
-      <div className='savedTodos'>
-        <SavedTodos />
+    {localStorage.getItem('jwt') ?
+      <div className='subWrapper'>
+        <div className='savedTodos'>
+          <SavedTodos />
+        </div>
+        <div className='todoList'>
+          <TodoList />
+        </div>
+      </div> :
+      <div>
+        <Auth />
       </div>
-      <div className='todoList'>
-        <TodoList />
-      </div>
-    </div>
+    }
+
     <style jsx>{`
       .todoList{
         width:500px;
@@ -85,12 +91,16 @@ const Main = () => (<div>
 </div>)
 
 class Header extends React.Component {
+  logOut() {
+    localStorage.removeItem('jwt')
+    window.location.reload()
+  }
   render() {
     return (<div className='wrapper'>
       <div className='button'>
-        <Button color='primary' size='large' variant='contained'>
+        <Button onClick={this.logOut.bind(this)} color='primary' size='large' variant='contained'>
           LOG OUT
-      </Button>
+        </Button>
       </div>
       <style jsx>{`
         .button{
