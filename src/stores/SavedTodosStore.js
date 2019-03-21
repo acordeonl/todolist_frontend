@@ -17,7 +17,7 @@ export class SavedTodosStore {
   @observable selectedTodoListId = 0
 
   @computed get tagList() {
-    return this.tags.split(' ')
+    return this.tags.split(',')
   }
 
   @action loadSavedTodos = (todoLists) => {

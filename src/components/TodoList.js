@@ -110,7 +110,9 @@ class Menu extends React.Component {
 class Header extends React.Component {
   async saveTodoList() {
     let res = await updateTodoList( this.props.savedTodosStore.selectedTodoListId , {
-      todos: JSON.stringify(this.props.todoListStore.todos)
+      title: this.props.todoListStore.title,
+      todos: JSON.stringify(this.props.todoListStore.todos),
+      tags: this.props.todoListStore.tags.toString()
     })
     let err = false ;
     if(res.dev_message) {
