@@ -1,5 +1,5 @@
 import React from "react"
-import { observer , inject } from "mobx-react"
+import { observer, inject } from "mobx-react"
 import DeleteIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
@@ -12,38 +12,44 @@ import { renderTodoList, refreshData } from '../services/render'
 import theme from '../styles/theme'
 
 
-@inject ('savedTodosStore')
-@inject ('todoListStore')
+@inject('savedTodosStore')
+@inject('todoListStore')
 @observer
 export default class SavedTodosStore extends React.Component {
   async addTodoList() {
     let res = await createTodoList({
-      title:"Untitled todo list",
-      tags:"",
-      todos:"[]"
+      title: "Untitled todo list",
+      tags: "",
+      todos: "[]"
     })
-    if(res.payload) {
+    if (res.payload) {
       refreshData()
     }
   }
+  queryTodolists(e) {
+    if (e.which === 13) {
+      console.log(e.target.value);
+      refreshData(e.target.value)
+    }
+  }
   render() {
-    const { savedTodos } = this.props.savedTodosStore 
+    const { savedTodos } = this.props.savedTodosStore
     return (<div className='centeredVertical'>
       <div className='centered searchInput'>
-        <Input style={{opacity:'0.7'}} placeholder='Search'
+        <Input onKeyPress={this.queryTodolists.bind(this)} style={{ opacity: '0.7',fontSize:'16px' }} placeholder='Search'
           startAdornment={
             <InputAdornment position="start">
-              <SearchIcon style={{opacity:'0.6'}}/>
+              <SearchIcon style={{ opacity: '0.6' }} />
             </InputAdornment>
           }
         />
       </div>
-      <div className='centered' style={{margin:'20px'}}>
+      <div className='centered' style={{ margin: '20px' }}>
         <Button variant="contained" color="primary" onClick={this.addTodoList.bind(this)} >
           New todo list
         </Button>
       </div>
-      {savedTodos.map((todoList,index) => (
+      {savedTodos.map((todoList, index) => (
         <TodoList key={index} todoList={todoList} />
       ))}
       <style jsx>{layoutStyles}</style>
@@ -57,27 +63,27 @@ export default class SavedTodosStore extends React.Component {
   }
 }
 
-@inject ('todoListStore')
-@inject ('savedTodosStore')
+@inject('todoListStore')
+@inject('savedTodosStore')
 @observer
-class TodoList extends React.Component { 
+class TodoList extends React.Component {
   async deleteTodoList(id) {
     let res = await deleteTodoList(id)
-    if(res.dev_message === "Deleted rows: 1") {
+    if (res.dev_message === "Deleted rows: 1") {
       refreshData()
     }
   }
-  render(){
-    const { id , title  } = this.props.todoList 
-    return ( <div onClick={()=>{renderTodoList(id)}}>
+  render() {
+    const { id, title } = this.props.todoList
+    return (<div onClick={() => { renderTodoList(id) }}>
       <div className='card'>
         <div className='spaceBetween top'>
           <div className='title'>
-            { title }
+            {title}
           </div>
           <div className='deleteIcon'>
-            <IconButton onClick={this.deleteTodoList.bind(this , id)}  size='small' >
-              <DeleteIcon style={{color:'white', opacity:'0.7'}} fontSize='small' />
+            <IconButton onClick={this.deleteTodoList.bind(this, id)} size='small' >
+              <DeleteIcon style={{ color: 'white', opacity: '0.7' }} fontSize='small' />
             </IconButton>
           </div>
         </div>

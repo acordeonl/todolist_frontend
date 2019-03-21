@@ -11,6 +11,17 @@ export const getTodoLists = async () => {
   return res
 }
 
+export const queryTodoLists = async ( query ) => {
+  let res = await (await fetch(`${config.backendUrl}/v1/todoLists/query?q=${query}`, {
+    method: 'get',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+    })
+  })).json()
+  return res
+}
+
 export const createTodoList = async (body) => {
   let res = await (await fetch(`${config.backendUrl}/v1/todoLists/`, {
     method: 'post',

@@ -1,16 +1,22 @@
 import SavedTodosStore from '../stores/SavedTodosStore'
 import TodoListStore from '../stores/TodoListStore'
-import { getTodoLists } from './todoLists'
+import { getTodoLists, queryTodoLists } from './todoLists'
 
-export const refreshData = async () => { 
-  let res = await getTodoLists() ;
+export const refreshData = async (query) => {
+  let res
+  if (query)
+    res = await queryTodoLists(query)
+  else
+    res = await getTodoLists()
   SavedTodosStore.loadSavedTodos(res.payload)
-  let tags = []
-  if(res.payload[0].tags !== '')
-    tags = res.payload[0].tags.split(',')
-  let todos = JSON.parse(res.payload[0].todos)
-  SavedTodosStore.selectedTodoListId = res.payload[0].id
-  TodoListStore.loadTodoList (res.payload[0].title, tags, todos)
+  if(res.payload.length > 0) {
+    let tags = []
+    if (res.payload[0].tags !== '')
+      tags = res.payload[0].tags.split(',')
+    let todos = JSON.parse(res.payload[0].todos)
+    SavedTodosStore.selectedTodoListId = res.payload[0].id
+    TodoListStore.loadTodoList(res.payload[0].title, tags, todos)
+  }
 }
 
 export const renderTodoList = async (id) => {
