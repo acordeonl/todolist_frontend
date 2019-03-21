@@ -17,7 +17,7 @@ import Grow from '@material-ui/core/Grow';
 import { todoListStyles , layoutStyles } from '../styles'
 import { observer, inject } from "mobx-react"
 import theme from '../styles/theme'
-import { deleteTodoList } from '../services/todoLists'
+import { updateTodoList, deleteTodoList } from '../services/todoLists'
 import { refreshData } from '../services/render'
 
 
@@ -108,16 +108,24 @@ class Menu extends React.Component {
 @inject('todoListStore')
 @observer
 class Header extends React.Component {
-  saveTodoList() {
-    let todos = this.props.todoListStore.getTodoList()
-    let tagList = this.props.todoListStore.getTagList()
-    console.log('--------------------------')
-    console.log(this.props.todoListStore.title)
-    console.log(todos)
-    console.log('--------------------------')
-    let { title } = this.props.todoListStore
-    this.props.savedTodosStore.createTodoList(title ? title : 'Untitled todo list', tagList)
-    this.props.todoListStore.clear()
+  async saveTodoList() {
+    let res = await updateTodoList( this.props.savedTodosStore.selectedTodoListId , {
+      todos: JSON.stringify(this.props.todoListStore.todos)
+    })
+    let err = false ;
+    if(res.dev_message) {
+      if(res.dev_message === 'Updated rows: 1' || res.dev_message === 'Updated rows: 0' ) {
+        alert('Todo list has been saved')
+        refreshData()
+      }
+      else 
+        err = true ;
+    }
+    else {
+      err = true ;
+    }
+    if(err)
+      alert('Saving todo list failed')
   }
   hideFilterTodos() {
     this.filterTodos.value = ''
