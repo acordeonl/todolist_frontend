@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { layoutStyles } from '../styles'
+import { login , signUp } from '../services/auth'
 
 class Auth extends Component {
   constructor(props) {
@@ -10,10 +11,24 @@ class Auth extends Component {
     this.action = ''
   }
 
-  handleSubmit ( event ) {
+  async handleSubmit ( event ) {
     event.preventDefault();
     const formData = new window.FormData(event.target)
-    console.log(this.action,formData.get('email'),formData.get('password'));
+    if(this.action === 'logIn') {
+      let res = await login( formData.get('email') , formData.get('password') )
+      if(res.user_message === 'invalid credentials')
+        alert(res.user_message)
+      else{
+        localStorage.setItem('jwt' , res.access_token )
+        window.location.reload()
+      }
+    }
+    if(this.action === 'signUp') { 
+      let res = await signUp( formData.get('email') , formData.get('password') )
+      console.log(res);
+      if(res.user_message === 'user already exists')
+        alert(res.user_message)
+    }
   }
   render() {
     return (<div>
@@ -40,10 +55,10 @@ class Auth extends Component {
             variant="outlined"
           />
           <div className='spaceBetween buttons'>
-            <Button onClick={() => { this.action = 'login' }} type='submit' color='primary' size='large' variant='contained'>
+            <Button onClick={() => { this.action = 'logIn' }} type='submit' color='primary' size='large' variant='contained'>
               LOG IN
               </Button>
-            <Button onClick={() => {this.action = 'singUp'}}  type='submit' color='primary' size='large' variant='contained'>
+            <Button onClick={() => {this.action = 'signUp'}}  type='submit' color='primary' size='large' variant='contained'>
               SIGN UP
               </Button>
           </div>
